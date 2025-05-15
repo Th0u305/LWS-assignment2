@@ -1,0 +1,58 @@
+export const oderReports = [
+  {
+    id: 0,
+    customerName: "Sumit Saha",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 1,
+    customerName: "Akash Ahmed",
+    item: 5,
+    amount: 123123,
+    status: "DELIVERED",
+  },
+  {
+    id: 2,
+    customerName: "Saad Hasan",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 3,
+    customerName: "MD Salahuddin",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 4,
+    customerName: "Ferdous",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 5,
+    customerName: "Rafe",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 6,
+    customerName: "Sarwar",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+  {
+    id: 7,
+    customerName: "Obaidul",
+    item: 5,
+    amount: 123123,
+    status: "PENDING",
+  },
+];
