@@ -11,6 +11,7 @@ const MainContent = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [selectedItem , setSelectedItem] = useState([])
     const [orders, setOrders] = useState(oderReports)
+    const [filteredOrders, setFilteredOrders] = useState(oderReports); // Data to display
     const [name , setName] = useState("")
 
     /// Add item to orders
@@ -33,34 +34,19 @@ const MainContent = () => {
     const handlePlaceOrder = () =>{
         
         const newItem = {
-            id : orders.length + 1,
+            id : (filteredOrders.length - 1) + 1,
             customerName : name,
             item : selectedItem.length,
             amount : totalPrice,
             status : "PENDING"
         }
-        setOrders([...orders,newItem])
-    }
-
-    //// Filter orders by status 
-    const handleFilter = (e) =>{
-        const value = (e.target.value);        
-
-        if (value.toLocaleLowerCase() === "all") {
-            return setOrders(oderReports)
-        }
-        if (value.toLocaleLowerCase() === "pending") {
-            const filtered = oderReports.filter((item)=> item.status.toLocaleLowerCase() === value.toLocaleLowerCase()) 
-            return setOrders(filtered)
-        }
-   
-        const filtered = orders.filter((item)=> item.status.toLocaleLowerCase() === value.toLocaleLowerCase()) 
-        setOrders(filtered)
+        setFilteredOrders([...filteredOrders,newItem])
     }
 
     ///// Delete item from order report lists
     const handleDeleteItem = (id) =>{
-        const deleted = orders.filter((item)=> item.id !== id)
+        const deleted = filteredOrders.filter((item)=> item.id !== id)
+        setFilteredOrders(deleted)
         setOrders(deleted)
     }
 
@@ -69,14 +55,31 @@ const MainContent = () => {
     const handleStatus = (id) =>{
         const filtered = orders.map((item) => item.id === id ? { ...item, status : "DELIVERED" } : item);
         setOrders(filtered);
+
+        const updatedFiltered = filteredOrders.map((item) => item.id === id ? { ...item, status: "DELIVERED" } : item);
+        setFilteredOrders(updatedFiltered); // Update displayed data
+
     }
+
+
+    //// Filter orders by status 
+    const handleFilter = (e) =>{
+        const value = (e.target.value);        
+
+        if (value.toLocaleLowerCase() === "all") {
+            return setFilteredOrders(orders)
+        }   
+        const filtered = orders.filter((item)=> item.status.toLocaleLowerCase() === value.toLocaleLowerCase()) 
+        setFilteredOrders(filtered)
+    }
+
 
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 flex-grow">
         <CreateOrder itemLists={itemLists} handleAddItem={handleAddItem} totalPrice={totalPrice} setName={setName} handlePlaceOrder={handlePlaceOrder} />
         <div className="md:col-span-2 h-[calc(100vh_-_130px)]">
-          <OrderSummary />
-          <OderReports orders={orders} handleFilter={handleFilter} handleDeleteItem={handleDeleteItem} handleStatus={handleStatus} />
+          <OrderSummary filteredOrders={filteredOrders}/>
+          <OderReports filteredOrders={filteredOrders} handleFilter={handleFilter} handleDeleteItem={handleDeleteItem} handleStatus={handleStatus} />
         </div>
       </div>
     );

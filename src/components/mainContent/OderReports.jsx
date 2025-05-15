@@ -1,7 +1,7 @@
 import React from "react";
 import FilterIcon from "./img/FilterIcon";
 
-const OderReports = ({orders,handleFilter,handleDeleteItem, handleStatus}) => {
+const OderReports = ({filteredOrders,handleFilter,handleDeleteItem, handleStatus}) => {
   return (
     <div>
       <div className="flex justify-between">
@@ -30,7 +30,7 @@ const OderReports = ({orders,handleFilter,handleDeleteItem, handleStatus}) => {
               </tr>
             </thead>
             <tbody className="text-sm">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order.id}  className="border-t border-gray-700">
                   <td className="py-3">{order.id}</td>
                   <td className="py-3">{order.customerName}</td>
