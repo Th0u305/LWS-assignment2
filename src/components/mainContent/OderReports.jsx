@@ -1,4 +1,3 @@
-import React from "react";
 import FilterIcon from "./img/FilterIcon";
 
 const OderReports = ({filteredOrders,handleFilter,handleDeleteItem, handleStatus}) => {
@@ -37,15 +36,17 @@ const OderReports = ({filteredOrders,handleFilter,handleDeleteItem, handleStatus
                   <td className="py-3">{order.item}</td>
                   <td className="py-3">{order.amount}</td>
                   <td className="py-3">
-                    <span className={order.status === "DELIVERED"? "text-green-500" : "text-red-500"}>{order.status}</span>
+                    <span className={order.status.toLocaleLowerCase() === "delivered"? "text-green-500" : "text-red-500"}>{order.status}</span>
                   </td>
                   <td className="py-3">
                     <button onClick={()=>handleDeleteItem(order.id)}  className="bg-gray-800 hover:bg-red-600 text-xs px-3 py-1 rounded-full mr-1 transition-colors duration-300">
                       Delete
                     </button>
-                    <button onClick={()=>handleStatus(order.id)}  className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
+                    {order.status.toLocaleLowerCase() === "pending" && (
+                      <button onClick={()=>handleStatus(order.id)}  className="bg-gray-800 hover:bg-green-600 text-xs px-3 py-1 rounded-full transition-colors duration-300">
                       DELIVER
                     </button>
+                    )}
                   </td>
                 </tr>
               ))}
