@@ -78,7 +78,7 @@ const MainContent = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 flex-grow">
         <CreateOrder itemLists={itemLists} handleAddItem={handleAddItem} totalPrice={totalPrice} setName={setName} handlePlaceOrder={handlePlaceOrder} />
         <div className="md:col-span-2 h-[calc(100vh_-_130px)]">
-          <OrderSummary filteredOrders={filteredOrders}/>
+          <OrderSummary filteredOrders={filteredOrders} initialOrders={initialOrders}/>
           <OderReports filteredOrders={filteredOrders} handleFilter={handleFilter} handleDeleteItem={handleDeleteItem} handleStatus={handleStatus} />
         </div>
       </div>
