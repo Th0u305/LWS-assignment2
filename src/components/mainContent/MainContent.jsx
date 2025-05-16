@@ -7,14 +7,15 @@ import { oderReports } from "./data/OrderReports";
 
 
 const MainContent = () => {
-    const [itemLists, setItemLists] = useState(foodList);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [selectedItem , setSelectedItem] = useState([])
-    const [orders, setOrders] = useState(oderReports)
-    const [filteredOrders, setFilteredOrders] = useState(oderReports); // Data to display
+    const [itemLists, setItemLists] = useState(foodList) /// All item lists 
+    const [totalPrice, setTotalPrice] = useState(0) /// Total items price
+    const [selectedItem , setSelectedItem] = useState([]) 
+    const [initialOrders, setInitialOrders] = useState(oderReports)
+    const [filteredOrders, setFilteredOrders] = useState(oderReports);
+    const [itemNumber, setItemNumber] = useState(Math.max(...filteredOrders.map((item)=> item.id)))
     const [name , setName] = useState("")
 
-    /// Add item to orders
+    /// Take orders
     const handleAddItem = (id, isAdd) => {
         const filtered = itemLists.map((item) => item.id === id ? { ...item, addItem: !isAdd ? true : false } : item);
         setItemLists(filtered);
@@ -32,14 +33,17 @@ const MainContent = () => {
 
    /// Add items to orders reports
     const handlePlaceOrder = () =>{
+
+        setItemNumber(itemNumber + 1)
         
         const newItem = {
-            id : (filteredOrders.length - 1) + 1,
+            id :  itemNumber + 1,
             customerName : name,
             item : selectedItem.length,
             amount : totalPrice,
             status : "PENDING"
         }
+        setInitialOrders([...initialOrders,newItem])
         setFilteredOrders([...filteredOrders,newItem])
     }
 
@@ -47,29 +51,25 @@ const MainContent = () => {
     const handleDeleteItem = (id) =>{
         const deleted = filteredOrders.filter((item)=> item.id !== id)
         setFilteredOrders(deleted)
-        setOrders(deleted)
+        setInitialOrders(deleted)
     }
 
 
     /// Updating status in order reports
     const handleStatus = (id) =>{
-        const filtered = orders.map((item) => item.id === id ? { ...item, status : "DELIVERED" } : item);
-        setOrders(filtered);
-
-        const updatedFiltered = filteredOrders.map((item) => item.id === id ? { ...item, status: "DELIVERED" } : item);
-        setFilteredOrders(updatedFiltered); // Update displayed data
-
+        const filtered = (initialOrders , filteredOrders).map((item) => item.id === id ? { ...item, status : "DELIVERED" } : item);
+        setInitialOrders(filtered);
+        setFilteredOrders(filtered);
     }
 
 
     //// Filter orders by status 
     const handleFilter = (e) =>{
-        const value = (e.target.value);        
-
+        const value = (e.target.value);    
         if (value.toLocaleLowerCase() === "all") {
-            return setFilteredOrders(orders)
+            return setFilteredOrders(initialOrders)
         }   
-        const filtered = orders.filter((item)=> item.status.toLocaleLowerCase() === value.toLocaleLowerCase()) 
+        const filtered = initialOrders.filter((item)=> item.status.toLocaleLowerCase() === value.toLocaleLowerCase()) 
         setFilteredOrders(filtered)
     }
 

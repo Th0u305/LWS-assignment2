@@ -1,4 +1,3 @@
-import React from "react";
 
 const OrderSummary = ({filteredOrders}) => {
   const pending = filteredOrders.filter((item)=> item.status.toLocaleLowerCase() === "pending").length 
